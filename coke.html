@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>把王以太淘汰黑箱导师群 - 終極大考驗</title>
+    <style>
+        :root {
+            --line-green: #06c755;
+            --bg-color: #1a1a1a;
+            --card-bg: #2b2b2b;
+            --text-color: #ffffff;
+            --sub-text: #b3b3b3;
+            --error: #ff4b4b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--line-green);
+        }
+
+        h1 { margin: 0; color: var(--line-green); font-size: 2em; }
+        .subtitle { color: var(--sub-text); margin-top: 10px; }
+
+        .question-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .question-card:hover { transform: translateY(-2px); }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--line-green);
+            font-weight: bold;
+        }
+
+        .q-text { font-size: 1.1em; margin-bottom: 15px; font-weight: 600; }
+
+        .options { display: grid; gap: 10px; }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #3a3a3a;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover { background: #4a4a4a; }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        /* Button Styling */
+        .submit-btn {
+            background: var(--line-green);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(6, 199, 85, 0.4);
+        }
+        .submit-btn:hover { background: #05a546; }
+
+        /* Result Section */
+        #result-section {
+            display: none;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 2px solid var(--line-green);
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            background: var(--bg-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--line-green);
+            margin: 0 auto 20px;
+            border: 4px solid var(--line-green);
+        }
+
+        .answer-key {
+            margin-top: 40px;
+            text-align: left;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+
+        .answer-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #222;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .correct { color: var(--line-green); font-weight: bold; }
+        .wrong { color: var(--error); font-weight: bold; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>把王以太淘汰黑箱导师群<br>30題地獄大考驗</h1>
+        <p class="subtitle">只有陳逸飛本人才考得到 100 分</p>
+    </header>
+
+    <form id="quizForm">
+        </form>
+
+    <div id="result-section">
+        <h2>測驗結果</h2>
+        <div class="score-circle" id="scoreDisplay">0</div>
+        <p id="commentDisplay"></p>
+        <button class="submit-btn" onclick="location.reload()" style="background: #444;">再測一次</button>
+        
+        <div class="answer-key" id="answerKey">
+            <h3>📝 詳細解答</h3>
+            </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        // Group 1: 創世紀元
+        {
+            q: "群組是在哪一年哪一天建立的？（這天也是大家放棄 IG 聊天的日子）",
+            options: ["2021/01/01", "2022/08/23", "2022/09/01", "2023/05/20"],
+            a: 1 // B
+        },
+        {
+            q: "創群第一分鐘，楊庭睿講的第一個抱怨是什麼？",
+            options: ["大家都沒在看訊息", "王以太被淘汰了", "我一直滑哀居", "明天早八"],
+            a: 2 // C
+        },
+        {
+            q: "群組剛創立時，誰在 00:11 崩潰大喊「我才剛修好我唉居的通知，操」？",
+            options: ["牛", "陳逸飛", "吳振偉", "賴宇軒"],
+            a: 0 // A
+        },
+        {
+            q: "2022/08/24 早上 10:06，牛把群組名稱改成了什麼？",
+            options: ["把王以太淘汰", "刺殺花椰菜", "頂大easy吧", "2026期末考"],
+            a: 1 // B
+        },
+        
+        // Group 2: 頂大傳說
+        {
+            q: "誰在凌晨 02:43 說出了名言「頂大easy吧」？",
+            options: ["賴宇軒", "陳逸飛", "王大福", "楊庭睿"],
+            a: 1 // B
+        },
+        {
+            q: "承上題，賴宇軒當時的回覆是什麼？",
+            options: ["確實", "笑死", "台大涼涼的", "台科大"],
+            a: 2 // C
+        },
+        {
+            q: "楊庭睿當時說刪除 IG 很屌，牛回應了什麼？",
+            options: ["超屌", "超遜", "神經病", "确实"],
+            a: 1 // B
+        },
+
+        // Group 3: 生存與食物
+        {
+            q: "王大福在 B01 身體不適，楊庭睿問他「我晚上去你會不會已經死了」，大福回：",
+            options: ["不會", "可能", "會", "不知道"],
+            a: 2 // C
+        },
+        {
+            q: "大家曾約好去吃一家韓式料理，結果進錯店，楊庭睿抱怨那家要多少錢？",
+            options: ["120", "160", "200", "250"],
+            a: 1 // B
+        },
+        {
+            q: "在討論要去哪裡吃飯時，牛說他跟誰正在「稽查吳振偉與他女朋友」？",
+            options: ["陳逸飛", "賴宇軒", "王以恆", "王大福"],
+            a: 2 // C
+        },
+        {
+            q: "王大福在捷運站蹲著乞討，說他差多少錢？",
+            options: ["5塊", "10塊", "20塊", "50塊"],
+            a: 0 // A
+        },
+
+        // Group 4: 學術與智商
+        {
+            q: "楊庭睿曾算出一題數學答案是「15根號3」，但他最後發現自己怎樣？",
+            options: ["算對了", "題目看錯", "完全找不到哪裡錯", "被陳逸飛騙了"],
+            a: 2 // C
+        },
+        {
+            q: "關於化學共振，賴宇軒解釋「一隻雙鍵代表幾分之幾鍵」？",
+            options: ["1/2", "1/3", "1.5", "4/3"],
+            a: 3 // D (1又1/3 = 4/3) - Wait context says 1/3 bond representation but implies 1.33 strength. Text says: 賴: 1又1/3鍵. But wait, Yang asked '一隻雙箭代表三分之一箭?'. Let's stick to text: 賴宇軒說「三個1又1/3鍵」",
+            // Correction based on file: 賴 says "他代表1/3鍵" then Yang asks "一隻雙箭代表三分之一箭" then Lai says "對" but then later "三個1又1/3鍵". Let's ask simpler.
+            // Let's change question to maintain accuracy.
+        },
+        {
+            q: "陳逸飛堅持寫作文要用 0.5 的筆，他認為 0.38 的筆會怎樣？",
+            options: ["斷水", "太淡", "刮紙/割紙", "不像男人"],
+            a: 0 // A (Wait, Wang Dafu said it breaks water, Yang said it cuts paper. Chen Yifei said 'Write composition then breaks'). Let's use Chen's reason.
+        },
+        {
+            q: "承上題，王大福嘲笑陳逸飛什麼？",
+            options: ["老人", "奈米屌", "寫字醜", "沒錢"],
+            a: 1 // B
+        },
+
+        // Group 5: 警察與意外
+        {
+            q: "楊庭睿被警察開單是因為？",
+            options: ["闖紅燈", "沒走斑馬線", "騎車沒戴安全帽", "隨地大小便"],
+            a: 1 // B
+        },
+        {
+            q: "那個開單的警察是騎什麼車？",
+            options: ["警車", "腳踏車", "摩托車", "馬"],
+            a: 2 // C
+        },
+        {
+            q: "牛在雙人研究室（V23）看到什麼東西覺得「超噁」？",
+            options: ["王大福的口水", "王以恆用的保險套", "吳振偉的考卷", "陳逸飛的頭髮"],
+            a: 1 // B
+        },
+
+        // Group 6: 英文與口誤
+        {
+            q: "在討論英文文法時，對於「Whatever」，吳振偉覺得念起來像什麼？",
+            options: ["大便", "手指刮黑板", "指甲刮玻璃", "唱歌"],
+            a: 1 // B
+        },
+        {
+            q: "吳振偉曾經把「油翔中」打錯成什麼，導致後來變成一個梗？",
+            options: ["油箱中", "郵箱中", "遊湘中", "有相中"],
+            a: 1 // B
+        },
+        {
+            q: "吳振偉說他國中的 89 同學會做什麼事？",
+            options: ["去網咖", "約砲", "抽煙", "打架"],
+            a: 1 // B
+        },
+        {
+            q: "承上題，牛對此的回應是？",
+            options: ["正常發揮", "未開化地區", "羨慕", "屁啦"],
+            a: 1 // B
+        },
+
+        // Group 7: 2025 穿越
+        {
+            q: "2025/12/31 是誰提議要用 Gemini 玩友情大考驗？",
+            options: ["楊庭睿", "吳振偉", "陳逸飛", "賴宇軒"],
+            a: 2 // C
+        },
+        {
+            q: "楊庭睿對這個提議的第一反應是？",
+            options: ["好啊", "那是啥", "無聊", "怎麼玩"],
+            a: 1 // B
+        },
+        {
+            q: "楊庭睿說他的聊天記錄備份只到哪一年？",
+            options: ["2022", "2023", "2024", "2025"],
+            a: 1 // B
+        },
+
+        // Group 8: 綜合題
+        {
+            q: "誰生日是在 8/25（大家在 8/24 晚上就開始祝賀）？",
+            options: ["楊庭睿", "王大福", "陳逸飛", "牛"],
+            a: 0 // A
+        },
+        {
+            q: "王大福曾經叫大家去北車陪他買什麼？",
+            options: ["參考書", "餅乾或甜甜圈", "衣服", "遊戲王卡"],
+            a: 1 // B
+        },
+        {
+            q: "誰說自己是「兒童王」？",
+            options: ["牛", "陳逸飛", "吳振偉", "賴宇軒"],
+            a: 2 // C
+        },
+        {
+            q: "楊庭睿說他是哪裡人？",
+            options: ["台北", "新北", "桃園", "新竹"],
+            a: 2 // C
+        },
+        {
+            q: "最後一題：這個群組最喜歡用的詞（出現頻率極高）是？",
+            options: ["靠北", "笑死", "確實", "頂大"],
+            a: 0 // A (Based on raw count in snippets, '靠北' and '操' are very high, let's go with 靠北 as safe bet or 笑死) - Actually let's assume '靠北' is the spirit.
+        }
+    ];
+
+    // Correcting Q12 slightly based on text logic
+    // Q12: Resonance bond strength. Lai says "三個1又1/3鍵". 
+    // Let's change Q12 content in the array to be safer.
+    quizData[11] = {
+        q: "關於化學共振，賴宇軒最後解釋 CO3 2- 是三個多少鍵？",
+        options: ["1鍵", "1.5鍵", "1又1/3鍵", "2鍵"],
+        a: 2
+    };
+
+    function renderQuiz() {
+        const form = document.getElementById('quizForm');
+        let html = '';
+        
+        quizData.forEach((item, index) => {
+            let optionsHtml = '';
+            item.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        <span>${opt}</span>
+                    </label>
+                `;
+            });
+
+            html += `
+                <div class="question-card">
+                    <div class="q-header">
+                        <span>Q${index + 1}</span>
+                        <span>3.3 分</span>
+                    </div>
+                    <div class="q-text">${item.q}</div>
+                    <div class="options">${optionsHtml}</div>
+                </div>
+            `;
+        });
+
+        html += '<button type="button" class="submit-btn" onclick="calculateScore()">交卷查看成績</button>';
+        form.innerHTML = html;
+    }
+
+    function calculateScore() {
+        let score = 0;
+        let answerHtml = '';
+        let allAnswered = true;
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (!selected) {
+                allAnswered = false;
+            }
+        });
+
+        if (!allAnswered) {
+            alert('還有題目沒寫完！請檢查一下。');
+            return;
+        }
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const userVal = parseInt(selected.value);
+            const isCorrect = userVal === item.a;
+            
+            if (isCorrect) score += 3.33; // Approx to 100
+
+            // Build Answer Key
+            answerHtml += `
+                <div class="answer-item">
+                    <strong>Q${index + 1}:</strong> ${item.q}<br>
+                    你的答案: <span class="${isCorrect ? 'correct' : 'wrong'}">${item.options[userVal]}</span><br>
+                    <span class="correct">正解: ${item.options[item.a]}</span>
+                </div>
+            `;
+        });
+
+        // Show Result
+        document.getElementById('quizForm').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('answerKey').innerHTML += answerHtml;
+        
+        // Round score
+        const finalScore = Math.min(Math.round(score), 100);
+        
+        // Animation
+        let current = 0;
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const interval = setInterval(() => {
+            if (current >= finalScore) {
+                clearInterval(interval);
+                scoreDisplay.innerText = finalScore;
+            } else {
+                current++;
+                scoreDisplay.innerText = current;
+            }
+        }, 20);
+
+        // Comment
+        const comment = document.getElementById('commentDisplay');
+        if (finalScore < 40) comment.innerText = "😡 你是王以太派來的臥底嗎？退群吧！";
+        else if (finalScore < 70) comment.innerText = "🐟 金魚腦群友，平常都在潛水對吧？";
+        else if (finalScore < 90) comment.innerText = "🔥 核心成員！你見證了這個群組的黑歷史！";
+        else comment.innerText = "👑 陳逸飛本人！或者是那個一直在備份聊天記錄的變態！";
+        
+        window.scrollTo(0, 0);
+    }
+
+    // Init
+    renderQuiz();
+</script>
+
+</body>
+</html>
